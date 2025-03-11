@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Secundária</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Página Secundária</h1>
+      <nav class="flex space-x-4">
+        <a href="index.html" class="hover:underline">Início</a>
+        <a href="#" id="toggleSavedData" class="hover:underline">Ver Dados Salvos</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="savedDataModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white rounded p-6 w-80 relative">
+      <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">&times;</button>
+      <h2 class="text-xl font-bold mb-4">Dados Salvos</h2>
+      <div id="savedDataContent" class="text-gray-700">
+      </div>
+    </div>
+  </div>
+
+  <main class="container mx-auto p-4">
+    <section>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white shadow rounded p-4">
+          <img src="https://via.placeholder.com/300" alt="Foto 1" class="w-full">
+          <p class="mt-2 text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+          </p>
+        </div>
+        <div class="bg-white shadow rounded p-4">
+          <img src="https://via.placeholder.com/300" alt="Foto 2" class="w-full">
+          <p class="mt-2 text-gray-600">
+            Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function atualizarDadosSalvos() {
+      const dados = JSON.parse(localStorage.getItem('dadosFormulario'));
+      const container = document.getElementById('savedDataContent');
+      if (dados) {
+        container.innerHTML = `
+          <p><strong>Nome:</strong> ${dados.nome}</p>
+          <p><strong>Email:</strong> ${dados.email}</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        `;
+      } else {
+        container.innerHTML = `<p>Nenhum dado salvo.</p>`;
+      }
+    }
+
+    document.getElementById('toggleSavedData').addEventListener('click', function(e) {
+      e.preventDefault();
+      atualizarDadosSalvos();
+      document.getElementById('savedDataModal').classList.remove('hidden');
+      document.getElementById('savedDataModal').classList.add('flex');
+    });
+
+    document.getElementById('closeModal').addEventListener('click', function() {
+      document.getElementById('savedDataModal').classList.remove('flex');
+      document.getElementById('savedDataModal').classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
